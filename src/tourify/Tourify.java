@@ -4,6 +4,9 @@
  */
 package tourify;
 
+import tourify.View.MainApp;
+import tourify.View.Registration;
+
 /**
  *
  * @author Acer
@@ -15,8 +18,10 @@ public class Tourify {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        NewJFrame nf = new NewJFrame();
-        nf.setVisible(true);
+//        Registration nf = new Registration();
+//        nf.setVisible(true);
+          MainApp mApp = new MainApp();
+          mApp.setVisible(true);
     }
     
 }
