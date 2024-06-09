@@ -28,6 +28,7 @@ public class MainApp extends javax.swing.JFrame {
 
         navigationBar = new javax.swing.JPanel();
         bookingsButton = new javax.swing.JButton();
+        tourPackageButton = new javax.swing.JButton();
         tabPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,13 +43,27 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
+        tourPackageButton.setText("Tour Packages");
+        tourPackageButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tourPackageButtonMouseClicked(evt);
+            }
+        });
+        tourPackageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tourPackageButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout navigationBarLayout = new javax.swing.GroupLayout(navigationBar);
         navigationBar.setLayout(navigationBarLayout);
         navigationBarLayout.setHorizontalGroup(
             navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navigationBarLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
-                .addComponent(bookingsButton)
+                .addGroup(navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tourPackageButton)
+                    .addComponent(bookingsButton))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         navigationBarLayout.setVerticalGroup(
@@ -56,6 +71,8 @@ public class MainApp extends javax.swing.JFrame {
             .addGroup(navigationBarLayout.createSequentialGroup()
                 .addGap(127, 127, 127)
                 .addComponent(bookingsButton)
+                .addGap(60, 60, 60)
+                .addComponent(tourPackageButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -81,7 +98,9 @@ public class MainApp extends javax.swing.JFrame {
         );
 
         BookingsDashboard1 bDashboard = new BookingsDashboard1();
+        TourPackageDashboard tpDashboard = new TourPackageDashboard();
         tabPanel.add(bDashboard);
+        tabPanel.add(tpDashboard);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -90,6 +109,15 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabPanel.setSelectedIndex(0);  
     }//GEN-LAST:event_bookingsButtonMouseClicked
+
+    private void tourPackageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tourPackageButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tourPackageButtonActionPerformed
+
+    private void tourPackageButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tourPackageButtonMouseClicked
+        // TODO add your handling code here:
+        tabPanel.setSelectedIndex(1);  
+    }//GEN-LAST:event_tourPackageButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -131,5 +159,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JButton bookingsButton;
     private javax.swing.JPanel navigationBar;
     private javax.swing.JTabbedPane tabPanel;
+    private javax.swing.JButton tourPackageButton;
     // End of variables declaration//GEN-END:variables
 }
