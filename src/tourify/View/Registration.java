@@ -7,8 +7,9 @@ package tourify.View;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javaapplication3.UserDao;
-import javaapplication3.User;
+import tourify.Controller.UserDao;
+import tourify.Model.User;
+
 
 /**
  *
@@ -23,6 +24,7 @@ public class Registration extends javax.swing.JFrame {
      */
     public Registration() {
         initComponents();
+        
     }
 
     /**
@@ -278,7 +280,7 @@ public class Registration extends javax.swing.JFrame {
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
-        String fname = fnameField.getText();
+    String fname = fnameField.getText();
     String lname = lnameField.getText();
     String username = usernameField.getText();
     String phnumber = phnumberField.getText();
