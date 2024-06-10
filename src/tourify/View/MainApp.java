@@ -28,17 +28,23 @@ public class MainApp extends javax.swing.JFrame {
 
         navigationBar = new javax.swing.JPanel();
         bookingsButton = new javax.swing.JButton();
+        tpButton = new javax.swing.JButton();
         tabPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1440, 1024));
         setMinimumSize(new java.awt.Dimension(1440, 1024));
-        setPreferredSize(new java.awt.Dimension(1440, 1024));
 
         bookingsButton.setText("Bookings");
         bookingsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bookingsButtonMouseClicked(evt);
+            }
+        });
+
+        tpButton.setText("Tour Packages");
+        tpButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tpButtonMouseClicked(evt);
             }
         });
 
@@ -48,7 +54,9 @@ public class MainApp extends javax.swing.JFrame {
             navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navigationBarLayout.createSequentialGroup()
                 .addGap(86, 86, 86)
-                .addComponent(bookingsButton)
+                .addGroup(navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bookingsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         navigationBarLayout.setVerticalGroup(
@@ -56,6 +64,8 @@ public class MainApp extends javax.swing.JFrame {
             .addGroup(navigationBarLayout.createSequentialGroup()
                 .addGap(127, 127, 127)
                 .addComponent(bookingsButton)
+                .addGap(45, 45, 45)
+                .addComponent(tpButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -82,6 +92,8 @@ public class MainApp extends javax.swing.JFrame {
 
         BookingsDashboard1 bDashboard = new BookingsDashboard1();
         tabPanel.add(bDashboard);
+        TourPackageDashboard tpDashboard = new TourPackageDashboard();
+        tabPanel.add(tpDashboard);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -90,6 +102,11 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabPanel.setSelectedIndex(0);  
     }//GEN-LAST:event_bookingsButtonMouseClicked
+
+    private void tpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tpButtonMouseClicked
+        // TODO add your handling code here:
+        tabPanel.setSelectedIndex(1);  
+    }//GEN-LAST:event_tpButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -133,5 +150,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JButton bookingsButton;
     private javax.swing.JPanel navigationBar;
     private javax.swing.JTabbedPane tabPanel;
+    private javax.swing.JButton tpButton;
     // End of variables declaration//GEN-END:variables
 }
