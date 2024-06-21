@@ -18,14 +18,13 @@ public class User {
     private String user_password;
     private String user_role;
 
-    public User( String user_fname, String user_lname, String user_username, String user_phnumber, String user_email, String user_password, String user_role) {
+    public User( String user_fname, String user_lname, String user_username, String user_phnumber, String user_email, String user_role) {
 
         this.user_fname = user_fname;
         this.user_lname = user_lname;
         this.user_username = user_username;
         this.user_phnumber = user_phnumber;
         this.user_email = user_email;
-        this.user_password = user_password;
         this.user_role = user_role;
     }
     public int getUser_id() {
@@ -60,9 +59,9 @@ public class User {
         return user_role;
     }
 
-//    public void setUser_id(int user_id) {
-//        this.user_id = user_id;
-//    }
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
     public void setUser_fname(String user_fname) {
         this.user_fname = user_fname;
     }

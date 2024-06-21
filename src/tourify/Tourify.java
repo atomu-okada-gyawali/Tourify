@@ -17,7 +17,7 @@ public class Tourify {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+         
 //        Registration nf = new Registration();
 //        nf.setVisible(true);
           MainApp mApp = new MainApp();

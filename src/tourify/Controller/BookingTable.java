@@ -17,17 +17,17 @@ import tourify.database.DB;
  * @author Lenovo
  */
 public class BookingTable {
-//    public static void main(String[] args) throws SQLException {
-//        String[][] array;
-//        array = getBookings1();
-//        
-//        for( String[] row: array){
-//            for(String item: row){
-//                System.out.print(item+"\t");
-//            }
-//                System.out.println("");
-//        }
-//    }
+    public static void main(String[] args) throws SQLException {
+        Object[][] array;
+        array = getBookings1();
+        
+        for( Object[] row: array){
+            for(Object item: row){
+                System.out.print(item+"\t");
+            }
+                System.out.println("");
+        }
+    }
     public static ArrayList<Object[]> getBookings() throws SQLException{
   try(Connection con = DB.connect()){
      String query = "select "
@@ -42,7 +42,9 @@ public class BookingTable {
              + " users.user_fname,"
              + "bookings.booking_hotel_yn,"
              + " bookings.booking_room_type,"
-             + "bookings.booking_room_num"
+             + "bookings.booking_room_num, "
+             + "bookings.booking_guide, "
+             + "bookings.tour_package_id"
              + " from"
              + " users inner join bookings on users.user_id = bookings.booking_guide"
              + " inner join travellers on  travellers.traveller_id= bookings.traveller_id"
@@ -64,7 +66,9 @@ public class BookingTable {
                   rs.getString("users.user_fname"),
                   rs.getString("bookings.booking_hotel_yn"),
                   rs.getString("bookings.booking_room_type"),
-                  String.valueOf(rs.getInt("bookings.booking_room_num"))
+                  rs.getInt("bookings.booking_room_num"),
+                  rs.getInt("bookings.tour_package_id"),
+                  rs.getInt("bookings.booking_guide")
             });
         }
             return records;

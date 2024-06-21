@@ -29,6 +29,7 @@ public class MainApp extends javax.swing.JFrame {
         navigationBar = new javax.swing.JPanel();
         bookingsButton = new javax.swing.JButton();
         tpButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         tabPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,6 +49,13 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Users");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout navigationBarLayout = new javax.swing.GroupLayout(navigationBar);
         navigationBar.setLayout(navigationBarLayout);
         navigationBarLayout.setHorizontalGroup(
@@ -56,7 +64,8 @@ public class MainApp extends javax.swing.JFrame {
                 .addGap(86, 86, 86)
                 .addGroup(navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bookingsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(bookingsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         navigationBarLayout.setVerticalGroup(
@@ -66,6 +75,8 @@ public class MainApp extends javax.swing.JFrame {
                 .addComponent(bookingsButton)
                 .addGap(45, 45, 45)
                 .addComponent(tpButton)
+                .addGap(34, 34, 34)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -94,6 +105,8 @@ public class MainApp extends javax.swing.JFrame {
         tabPanel.add(bDashboard);
         TourPackageDashboard tpDashboard = new TourPackageDashboard();
         tabPanel.add(tpDashboard);
+        users uDashboard = new users();
+        tabPanel.add(uDashboard);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -107,6 +120,11 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
         tabPanel.setSelectedIndex(1);  
     }//GEN-LAST:event_tpButtonMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        tabPanel.setSelectedIndex(2);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -148,6 +166,7 @@ public class MainApp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookingsButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel navigationBar;
     private javax.swing.JTabbedPane tabPanel;
     private javax.swing.JButton tpButton;

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import tourify.database.DB;
 
 /**
@@ -16,16 +17,14 @@ import tourify.database.DB;
  * @author Lenovo
  */
 public class UserTable {
-    public static void main(String[] args) throws SQLException {
-        ArrayList<String[]> output = getUsers();
-        for(int i=0; i < output.size(); i++){
-            for(int j = 0; j < output.get(i).length; j++){
-                System.out.print(output.get(i)[j]+"\t");
-            }
-        System.out.println("");
-        }
-    }
-    public static ArrayList<String[]> getUsers() throws SQLException{
+//    public static void main(String[] args) throws SQLException {
+//        String[][] records = getUsers();
+//        for(String[] record: records){
+//            System.out.println(Arrays.toString(record));
+//        }
+//        
+//    }
+    public static String[][] getUsers() throws SQLException{
         try(Connection conn = DB.connect()){
         String query = "SELECT * FROM users";
         PreparedStatement ps = conn.prepareStatement(query);
@@ -41,12 +40,17 @@ public class UserTable {
             rs.getString("user_username"),
             rs.getString("user_phnumber"),
             rs.getString("user_email"),
-            rs.getString("user_password"),
             rs.getString("user_role")
         });
         }
-               
-        return records;
+        String[][] recordsArr = new String[records.size()][7];
+        
+        for(int i = 0; i < records.size(); i++){
+            recordsArr[i] = records.get(i); 
+        
+        }
+        
+        return recordsArr;
     }
     }
 }

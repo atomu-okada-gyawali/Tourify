@@ -56,6 +56,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="tpButton" max="32767" attributes="0"/>
                       <Component id="bookingsButton" max="32767" attributes="0"/>
+                      <Component id="jButton1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="95" max="32767" attributes="0"/>
               </Group>
@@ -68,6 +69,8 @@
                   <Component id="bookingsButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="tpButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -90,6 +93,14 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tpButtonMouseClicked"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Users"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JTabbedPane" name="tabPanel">
@@ -99,7 +110,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="BookingsDashboard1 bDashboard = new BookingsDashboard1();&#xa;tabPanel.add(bDashboard);&#xa;TourPackageDashboard tpDashboard = new TourPackageDashboard();&#xa;tabPanel.add(tpDashboard);"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="BookingsDashboard1 bDashboard = new BookingsDashboard1();&#xa;tabPanel.add(bDashboard);&#xa;TourPackageDashboard tpDashboard = new TourPackageDashboard();&#xa;tabPanel.add(tpDashboard);&#xa;users uDashboard = new users();&#xa;tabPanel.add(uDashboard);"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>

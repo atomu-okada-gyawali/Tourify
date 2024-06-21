@@ -228,7 +228,7 @@
               <Font name="Rockwell Condensed" size="18" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Admin&quot;, &quot;Staff&quot;, &quot;Tourguide&quot; })" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Admin&quot;, &quot;Staff&quot;, &quot;Tour guide&quot; })" type="code"/>
             </Property>
           </Properties>
           <Events>

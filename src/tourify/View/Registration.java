@@ -86,7 +86,7 @@ public class Registration extends javax.swing.JFrame {
         });
 
         roleEntry.setFont(new java.awt.Font("Rockwell Condensed", 0, 18)); // NOI18N
-        roleEntry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff", "Tourguide" }));
+        roleEntry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff", "Tour guide" }));
         roleEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roleEntryActionPerformed(evt);
@@ -289,9 +289,10 @@ public class Registration extends javax.swing.JFrame {
     String pass = passField.getText();
     String cpass = cpassField.getText();
     
-    User newUser = new User(fname,lname,username,phnumber,email,pass,role);
+    User newUser = new User(fname,lname,username,phnumber,email,role);
+    newUser.setUser_password(pass);
         try {
-            UserDao.createUser(newUser);
+            UserDao.addUser(newUser);
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }

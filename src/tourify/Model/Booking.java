@@ -18,22 +18,29 @@ public class Booking {
     private int booking_room_num;
     private String booking_room_type;
     private int tour_package_id;
+    private int booking_agent_id;
     private int traveller_id;
     private String booking_status;
+    private String booking_transportation;
 
     public Booking(
             Date booking_date, 
             String booking_hotel_yn, 
             int booking_room_num, 
-            String booking_room_type, 
-            String booking_agent, 
-            String booking_status
+            String booking_room_type,
+            int tour_package_id,
+            int booking_agent_id, 
+            String booking_status,
+            String booking_transportation
     ) {
         this.booking_date = booking_date;
         this.booking_hotel_yn = booking_hotel_yn;
         this.booking_room_num = booking_room_num;
         this.booking_room_type = booking_room_type;
+        this.tour_package_id = tour_package_id;
+        this.booking_agent_id = booking_agent_id;
         this.booking_status = booking_status;
+        this.booking_transportation = booking_transportation;
     }
 
     public int getBooking_id() {
@@ -74,6 +81,46 @@ public class Booking {
 
     public void setTraveller_id(int traveller_id) {
         this.traveller_id = traveller_id;
+    }
+
+    public String getBooking_transportation() {
+        return booking_transportation;
+    }
+
+    public void setBooking_id(int booking_id) {
+        this.booking_id = booking_id;
+    }
+
+    public void setBooking_date(Date booking_date) {
+        this.booking_date = booking_date;
+    }
+
+    public void setBooking_hotel_yn(String booking_hotel_yn) {
+        this.booking_hotel_yn = booking_hotel_yn;
+    }
+
+    public void setBooking_room_num(int booking_room_num) {
+        this.booking_room_num = booking_room_num;
+    }
+
+    public void setBooking_room_type(String booking_room_type) {
+        this.booking_room_type = booking_room_type;
+    }
+
+    public void setBooking_status(String booking_status) {
+        this.booking_status = booking_status;
+    }
+
+    public void setBooking_transportation(String booking_transportation) {
+        this.booking_transportation = booking_transportation;
+    }
+
+    public int getBooking_agent_id() {
+        return booking_agent_id;
+    }
+
+    public void setBooking_agent_id(int booking_agent_id) {
+        this.booking_agent_id = booking_agent_id;
     }
     
     
