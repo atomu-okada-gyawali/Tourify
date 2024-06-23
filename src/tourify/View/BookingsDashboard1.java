@@ -46,8 +46,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        addBooking = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         dateField = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
@@ -99,12 +99,21 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(911, 1025));
 
         try{
-            jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"}));
+            jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
+                {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                }
+
+            );
         }
         catch(SQLException e){
             e.printStackTrace();
             jTable1.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"}));
         }
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.setRowSelectionAllowed(true);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -121,17 +130,22 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             }
         });
 
-        jButton3.setText("Delete");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Delete Booking");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
+        });
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Add booking");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        addBooking.setText("Add booking");
+        addBooking.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                addBookingMouseClicked(evt);
             }
         });
 
@@ -141,9 +155,9 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82)
                 .addComponent(updateButton)
                 .addGap(72, 72, 72)
@@ -155,8 +169,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -413,11 +427,11 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_roomTypeFieldActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void addBookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookingMouseClicked
         // TODO add your handling code here:
 
         String nameValue = nameField.getText();
@@ -444,7 +458,12 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         
         
         try{
-        jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"}));
+        jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
+            {
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    });
         }
         catch(SQLException e){
         e.printStackTrace();
@@ -462,7 +481,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         transportField.setSelectedItem("<select one>");
         roomTypeField.setSelectedItem("<select one>");
         
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_addBookingMouseClicked
 
     private void roomNoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomNoFieldActionPerformed
         // TODO add your handling code here:
@@ -508,7 +527,12 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         }
         
         try {
-            jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"}));
+            jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
+                {
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    });
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -563,15 +587,49 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
+        int idValue = ((Integer)tModel.getValueAt(jTable1.getSelectedRow(),0));        
+        
+        try {
+            BookingDao.deleteBooking(idValue);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            jTable1.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
+                {
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    });
+        } catch (SQLException ex) {
+            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        nameField.setText("");
+        phNumField.setText("");
+        hotelynCheck.setSelected(false);
+        roomNoField.setText("");
+        tpField.setText("");
+        travellerNoField.setText("");
+        guideTextField.setText("");
+        dateField.setDate(null);
+        emailField.setText("");
+        transportField.setSelectedItem("<select one>");
+        roomTypeField.setSelectedItem("<select one>");
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBooking;
     private com.toedter.calendar.JDateChooser dateField;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JComboBox<String> guideField;
     private javax.swing.JTextField guideTextField;
     private javax.swing.JCheckBox hotelynCheck;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
