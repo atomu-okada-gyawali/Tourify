@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.PreparedStatement;
 /**
  *
  * @author Lenovo
@@ -21,9 +22,11 @@ public class DB {
             String userName = "root";
             String password = "dirtydeedsdonedirtcheap@D4C";
             
-            conn = DriverManager.getConnection(url,userName,password);
+            conn = DriverManager.getConnection(url,userName,password);    
+            System.out.println("Connection made");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Connection Failed");
         }
         return conn;
     }

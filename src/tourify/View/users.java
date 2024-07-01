@@ -48,7 +48,8 @@ public class users extends javax.swing.JPanel {
         updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        usersTable = new javax.swing.JTable();
+        deselectButton = new javax.swing.JToggleButton();
 
         setMaximumSize(new java.awt.Dimension(911, 1025));
         setMinimumSize(new java.awt.Dimension(911, 1025));
@@ -64,7 +65,7 @@ public class users extends javax.swing.JPanel {
 
         jLabel5.setText("Email");
 
-        roleField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff", "Tour guide" }));
+        roleField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<select one>", "Admin", "Staff", "Tour guide" }));
 
         updateButton.setText("Update");
         updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,20 +80,32 @@ public class users extends javax.swing.JPanel {
                 deleteButtonMouseClicked(evt);
             }
         });
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         try{
             DefaultTableModel tModel = new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"});
-            jTable1.setModel(tModel);
+            usersTable.setModel(tModel);
         }catch(SQLException e){
             e.printStackTrace();
-            jTable1.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
+            usersTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
         }
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        usersTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                usersTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(usersTable);
+
+        deselectButton.setText("Deselect");
+        deselectButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deselectButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -102,17 +115,18 @@ public class users extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(311, 311, 311)
-                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(229, 229, 229))
+                        .addComponent(unameField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(unameField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(311, 311, 311)
+                                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,7 +143,9 @@ public class users extends javax.swing.JPanel {
                                             .addComponent(lnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,15 +174,17 @@ public class users extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(17, 17, 17)
-                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -177,18 +195,18 @@ public class users extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void usersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersTableMouseClicked
         // TODO add your handling code here:
         
         
-        DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
-        int idValue = Integer.parseInt((String) tModel.getValueAt(jTable1.getSelectedRow(),0));
-        String tFname = tModel.getValueAt(jTable1.getSelectedRow(),1).toString();
-        String tLname = tModel.getValueAt(jTable1.getSelectedRow(),2).toString();
-        String tUname = tModel.getValueAt(jTable1.getSelectedRow(),3).toString();
-        String tPhnum = tModel.getValueAt(jTable1.getSelectedRow(),4).toString();
-        String tEmail = tModel.getValueAt(jTable1.getSelectedRow(),5).toString();
-        String tRole = tModel.getValueAt(jTable1.getSelectedRow(),6).toString();
+        DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
+        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(),0));
+        String tFname = tModel.getValueAt(usersTable.getSelectedRow(),1).toString();
+        String tLname = tModel.getValueAt(usersTable.getSelectedRow(),2).toString();
+        String tUname = tModel.getValueAt(usersTable.getSelectedRow(),3).toString();
+        String tPhnum = tModel.getValueAt(usersTable.getSelectedRow(),4).toString();
+        String tEmail = tModel.getValueAt(usersTable.getSelectedRow(),5).toString();
+        String tRole = tModel.getValueAt(usersTable.getSelectedRow(),6).toString();
         
         fnameField.setText(tFname);
         lnameField.setText(tLname);
@@ -198,12 +216,12 @@ public class users extends javax.swing.JPanel {
         roleField.setSelectedItem(tRole);
         
 //        "ID","First Name","Last Name","Username","Phone No","Email","Role"
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_usersTableMouseClicked
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
-        int idValue = Integer.parseInt((String) tModel.getValueAt(jTable1.getSelectedRow(),0));
+        DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
+        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(),0));
         String nameValue = fnameField.getText();
         String lnameValue = lnameField.getText();
         String unameValue = unameField.getText();
@@ -221,18 +239,26 @@ public class users extends javax.swing.JPanel {
         }
         
         try{
-        jTable1.setModel(new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
+        usersTable.setModel(new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
         }catch(SQLException e){
         e.printStackTrace();
-        jTable1.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
+        usersTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
+        
+        fnameField.setText("");
+        lnameField.setText("");
+        unameField.setText("");
+        phnumField.setText("");
+        emailField.setText("");
+        roleField.setSelectedItem("<select one>");
+        
 }
         
     }//GEN-LAST:event_updateButtonMouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
-        int idValue = Integer.parseInt((String) tModel.getValueAt(jTable1.getSelectedRow(),0));
+        DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
+        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(),0));
         
          try {
             UserDao.deleteUser(idValue);
@@ -241,16 +267,32 @@ public class users extends javax.swing.JPanel {
         }
         
         try{
-        jTable1.setModel(new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
+        usersTable.setModel(new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
         }catch(SQLException e){
         e.printStackTrace();
-        jTable1.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
+        usersTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
 }
     }//GEN-LAST:event_deleteButtonMouseClicked
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void deselectButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deselectButtonMouseClicked
+        // TODO add your handling code here:
+        usersTable.clearSelection();
+        fnameField.setText("");
+        lnameField.setText("");
+        unameField.setText("");
+        phnumField.setText("");
+        emailField.setText("");
+        roleField.setSelectedItem("<select one>");
+    }//GEN-LAST:event_deselectButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
+    private javax.swing.JToggleButton deselectButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField fnameField;
     private javax.swing.JLabel jLabel1;
@@ -259,11 +301,11 @@ public class users extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField lnameField;
     private javax.swing.JTextField phnumField;
     private javax.swing.JComboBox<String> roleField;
     private javax.swing.JTextField unameField;
     private javax.swing.JButton updateButton;
+    private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }

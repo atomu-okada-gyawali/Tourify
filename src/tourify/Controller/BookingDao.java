@@ -178,7 +178,8 @@ String updateBookingQ = "UPDATE bookings "
                      + "booking_room_type = ?, "
                      + "tour_package_id = ?, "
                      + "booking_status = ?, "
-                     + "booking_guide = ? "
+                     + "booking_guide = ? ,"
+                     + "booking_transportation = ? "
                      + "WHERE booking_id = "+booking.getBooking_id();
 
     
@@ -206,6 +207,7 @@ String updateBookingQ = "UPDATE bookings "
     updateBookingStmt.setInt(5, booking.getTour_package_id());
     updateBookingStmt.setString(6, booking.getBooking_status());
     updateBookingStmt.setInt(7,booking.getBooking_agent_id());
+    updateBookingStmt.setString(8,booking.getBooking_transportation());
 
     
     updateTravellerStmt.executeUpdate();
