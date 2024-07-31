@@ -20,7 +20,7 @@ public class DB {
         try{
             String url = "jdbc:mysql://localhost:3306/Tourify";
             String userName = "root";
-            String password = "Your Password";
+            String password = "freefire@0852";
             
             conn = DriverManager.getConnection(url,userName,password);    
             System.out.println("Connection made");

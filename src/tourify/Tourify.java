@@ -28,7 +28,7 @@ public class Tourify {
         try{
             String url = "jdbc:mysql://localhost:3306/";
             String userName = "root";
-            String password = "dirtydeedsdonedirtcheap@D4C";
+            String password = "freefire@0852";
             
             Connection conn = DriverManager.getConnection(url,userName,password);    
             
