@@ -113,12 +113,12 @@ public class MainApp extends javax.swing.JFrame {
 
     private void bookingsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingsButtonMouseClicked
         // TODO add your handling code here:
-        tabPanel.setSelectedIndex(0);  
+        tabPanel.setSelectedIndex(0);
     }//GEN-LAST:event_bookingsButtonMouseClicked
 
     private void tpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tpButtonMouseClicked
         // TODO add your handling code here:
-        tabPanel.setSelectedIndex(1);  
+        tabPanel.setSelectedIndex(1);
     }//GEN-LAST:event_tpButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked

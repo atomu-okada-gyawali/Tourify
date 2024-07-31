@@ -91,7 +91,8 @@ public class Tourify {
                     "foreign key(traveller_id) references travellers(traveller_id), " +
                     "foreign key(booking_booker) references users(user_id)," +
                     "foreign key(booking_guide) references users(user_id))";
-            
+            String modifyBookingsQ = "alter table bookings "
+                    + "modify booking_room_num int";
             PreparedStatement usersPS = conn.prepareStatement(usersQ);
             usersPS.execute();
             PreparedStatement travellersPS = conn.prepareStatement(travellersQ);
@@ -100,6 +101,8 @@ public class Tourify {
             tour_packagesPS.execute();
             PreparedStatement bookingsPS = conn.prepareStatement(bookingsQ);
             bookingsPS.execute();
+            PreparedStatement modifyBookingPS = conn.prepareStatement(modifyBookingsQ);
+            modifyBookingPS.execute();
 //        Registration nf = new Registration();
 //        nf.setVisible(true);
         } catch (SQLException ex) {

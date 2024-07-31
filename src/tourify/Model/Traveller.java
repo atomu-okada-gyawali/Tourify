@@ -9,6 +9,7 @@ package tourify.Model;
  * @author Lenovo
  */
 public class Traveller {
+
     private int traveller_id;
     private String traveller_name;
     private String traveller_email;
@@ -41,5 +42,5 @@ public class Traveller {
     public int getTraveller_number() {
         return traveller_number;
     }
-    
+
 }

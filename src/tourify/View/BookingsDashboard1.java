@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package tourify.View;
+
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
@@ -16,14 +17,14 @@ import tourify.Controller.UserDao;
 import tourify.Model.Booking;
 import tourify.Model.Traveller;
 
-
 /**
  *
  * @author lenevo
  */
 public class BookingsDashboard1 extends javax.swing.JPanel {
+
     Boolean hotelyn = false;
-    
+
     /**
      * Creates new form BookingsDashboard1
      */
@@ -447,39 +448,35 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
 
         String nameValue = nameField.getText();
         String phNumValue = phNumField.getText();
-        String hotelynValue = hotelyn? "Yes": "No";
+        String hotelynValue = hotelyn ? "Yes" : "No";
         String emailValue = emailField.getText();
-        String transportValue= String.valueOf(transportField.getSelectedItem());
-        String roomTypeValue= String.valueOf(roomTypeField.getSelectedItem());
+        String transportValue = String.valueOf(transportField.getSelectedItem());
+        String roomTypeValue = String.valueOf(roomTypeField.getSelectedItem());
         int roomNoValue = Integer.parseInt(roomNoField.getText());
         int tourPackageIdValue = Integer.parseInt(tpField.getText());
         Date date = dateField.getDate();
         int travellerNoValue = Integer.parseInt(travellerNoField.getText());
-        int guideIdValue= Integer.parseInt(guideTextField.getText());
-        
+        int guideIdValue = Integer.parseInt(guideTextField.getText());
 
-        Traveller travellerInput = new Traveller(nameValue,emailValue,phNumValue,travellerNoValue);
-        Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue,tourPackageIdValue,guideIdValue, "Unpaid",transportValue);//hardcoded
-        
+        Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
+        Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
+
         try {
             BookingDao.addBooking(bookingInput, travellerInput, 2);
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        try{
-        bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
-            {
-        public boolean isCellEditable(int row, int column) {
-            return false;
+
+        try {
+            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+            bookingsTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", " Guide Id"}));
         }
-    });
-        }
-        catch(SQLException e){
-        e.printStackTrace();
-        bookingsTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", " Guide Id"}));
-        }   
         nameField.setText("");
         phNumField.setText("");
         hotelynCheck.setSelected(false);
@@ -491,7 +488,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         emailField.setText("");
         transportField.setSelectedItem("<select one>");
         roomTypeField.setSelectedItem("<select one>");
-        
+
     }//GEN-LAST:event_addBookingMouseClicked
 
     private void roomNoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomNoFieldActionPerformed
@@ -515,35 +512,34 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         // TODO add your handling code here:
         String nameValue = nameField.getText();
         String phNumValue = phNumField.getText();
-        String hotelynValue = hotelyn? "Yes": "No";
+        String hotelynValue = hotelyn ? "Yes" : "No";
         String emailValue = emailField.getText();
-        String transportValue= String.valueOf(transportField.getSelectedItem());
-        String roomTypeValue= String.valueOf(roomTypeField.getSelectedItem());
+        String transportValue = String.valueOf(transportField.getSelectedItem());
+        String roomTypeValue = String.valueOf(roomTypeField.getSelectedItem());
         int roomNoValue = Integer.parseInt(roomNoField.getText());
         int tourPackageIdValue = Integer.parseInt(tpField.getText());
         Date date = dateField.getDate();
         int travellerNoValue = Integer.parseInt(travellerNoField.getText());
-        int guideIdValue= Integer.parseInt(guideTextField.getText());
-        
+        int guideIdValue = Integer.parseInt(guideTextField.getText());
+
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
-        int idValue = ((Integer)tModel.getValueAt(bookingsTable.getSelectedRow(),0));
-        
-        Traveller travellerInput = new Traveller(nameValue,emailValue,phNumValue,travellerNoValue);        
-        Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue,tourPackageIdValue,guideIdValue, "Unpaid",transportValue);//hardcoded
+        int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
+
+        Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
+        Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
         bookingInput.setBooking_id(idValue);
         try {
             BookingDao.editBooking(bookingInput, travellerInput);
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
-            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
-                {
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    });
+            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            });
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -562,23 +558,22 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
 
     private void bookingsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingsTableMouseClicked
         // TODO add your handling code here:
-                // TODO add your handling code here:
+        // TODO add your handling code here:
         //        {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room"}
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
-        String tname = tModel.getValueAt(bookingsTable.getSelectedRow(),1).toString();
-        String tEmail = tModel.getValueAt(bookingsTable.getSelectedRow(),2).toString();
-        
-        String tTravellerNo = (String)tModel.getValueAt(bookingsTable.getSelectedRow(),4);
-        String tTravellerPhNo= tModel.getValueAt(bookingsTable.getSelectedRow(),5).toString();
-        String tTransport = tModel.getValueAt(bookingsTable.getSelectedRow(),6).toString();
-        Date tDate = (java.util.Date) tModel.getValueAt(bookingsTable.getSelectedRow(),7);
-        Boolean tHotelyn = tModel.getValueAt(bookingsTable.getSelectedRow(),9).toString().equals("Yes");
-        String tRoomType = tModel.getValueAt(bookingsTable.getSelectedRow(),10).toString();
-        String tNoofRoom = tModel.getValueAt(bookingsTable.getSelectedRow(),11).toString();
-        String tTpID = tModel.getValueAt(bookingsTable.getSelectedRow(),12).toString();
-        String tGuideId = tModel.getValueAt(bookingsTable.getSelectedRow(),13).toString();
-        
-        
+        String tname = tModel.getValueAt(bookingsTable.getSelectedRow(), 1).toString();
+        String tEmail = tModel.getValueAt(bookingsTable.getSelectedRow(), 2).toString();
+
+        String tTravellerNo = (String) tModel.getValueAt(bookingsTable.getSelectedRow(), 4);
+        String tTravellerPhNo = tModel.getValueAt(bookingsTable.getSelectedRow(), 5).toString();
+        String tTransport = tModel.getValueAt(bookingsTable.getSelectedRow(), 6).toString();
+        Date tDate = (java.util.Date) tModel.getValueAt(bookingsTable.getSelectedRow(), 7);
+        Boolean tHotelyn = tModel.getValueAt(bookingsTable.getSelectedRow(), 9).toString().equals("Yes");
+        String tRoomType = tModel.getValueAt(bookingsTable.getSelectedRow(), 10).toString();
+        String tNoofRoom = tModel.getValueAt(bookingsTable.getSelectedRow(), 11).toString();
+        String tTpID = tModel.getValueAt(bookingsTable.getSelectedRow(), 12).toString();
+        String tGuideId = tModel.getValueAt(bookingsTable.getSelectedRow(), 13).toString();
+
         nameField.setText(tname);
         emailField.setText(tEmail);
         travellerNoField.setText(tTravellerNo);
@@ -590,32 +585,27 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         roomNoField.setText(tNoofRoom);
         tpField.setText(tTpID);
         guideTextField.setText(tGuideId);
-        
-        
 
-        
-        
-        
+
     }//GEN-LAST:event_bookingsTableMouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
-        int idValue = ((Integer)tModel.getValueAt(bookingsTable.getSelectedRow(),0));        
-        
+        int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
+
         try {
             BookingDao.deleteBooking(idValue);
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
-            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(),new String[] {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room","Tour Package Id", "Guide Id"})
-                {
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    });
+            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            });
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }

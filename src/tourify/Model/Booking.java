@@ -12,6 +12,7 @@ import java.util.Date;
  * @author Lenovo
  */
 public class Booking {
+
     private int booking_id;
     private Date booking_date;
     private String booking_hotel_yn;
@@ -24,12 +25,12 @@ public class Booking {
     private String booking_transportation;
 
     public Booking(
-            Date booking_date, 
-            String booking_hotel_yn, 
-            int booking_room_num, 
+            Date booking_date,
+            String booking_hotel_yn,
+            int booking_room_num,
             String booking_room_type,
             int tour_package_id,
-            int booking_agent_id, 
+            int booking_agent_id,
             String booking_status,
             String booking_transportation
     ) {
@@ -122,6 +123,5 @@ public class Booking {
     public void setBooking_agent_id(int booking_agent_id) {
         this.booking_agent_id = booking_agent_id;
     }
-    
-    
-}   
+
+}
