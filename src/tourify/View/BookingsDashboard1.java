@@ -45,7 +45,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         bookingsTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
+        billButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         addBooking = new javax.swing.JButton();
@@ -62,6 +62,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         travellerNoField = new javax.swing.JTextField();
         guideTextField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -122,8 +124,12 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(bookingsTable);
 
-        jButton5.setText("Bill");
+        billButton.setBackground(new java.awt.Color(0, 102, 102));
+        billButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/bill.png"))); // NOI18N
+        billButton.setText("Bill");
 
+        updateButton.setBackground(new java.awt.Color(0, 102, 102));
+        updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/updates.png"))); // NOI18N
         updateButton.setText("Update bookings");
         updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -131,6 +137,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             }
         });
 
+        deleteButton.setBackground(new java.awt.Color(0, 102, 102));
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/delete.png"))); // NOI18N
         deleteButton.setText("Delete Booking");
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -143,13 +151,22 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             }
         });
 
+        addBooking.setBackground(new java.awt.Color(0, 102, 102));
+        addBooking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/add.png"))); // NOI18N
         addBooking.setText("Add booking");
         addBooking.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addBookingMouseClicked(evt);
             }
         });
+        addBooking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBookingActionPerformed(evt);
+            }
+        });
 
+        deselectButton.setBackground(new java.awt.Color(0, 102, 102));
+        deselectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/choice.png"))); // NOI18N
         deselectButton.setText("Deselect");
         deselectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,10 +183,10 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                 .addComponent(addBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(57, 57, 57)
                 .addComponent(updateButton)
-                .addGap(48, 48, 48)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(billButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
@@ -184,7 +201,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                         .addComponent(addBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(billButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -192,6 +209,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
 
         jLabel9.setText("Date");
 
+        roomNoField.setEnabled(false);
         roomNoField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roomNoFieldActionPerformed(evt);
@@ -199,6 +217,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         });
 
         jLabel6.setText("No of rooms");
+        jLabel6.setAutoscrolls(true);
+        jLabel6.setFocusable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -245,6 +265,10 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("View Itinerary");
+
+        jButton2.setText("View Pamphlet");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -257,8 +281,13 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                 .addGap(132, 132, 132)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(guideTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(guideTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,8 +298,11 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(travellerNoField, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(guideTextField))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(travellerNoField, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                        .addComponent(guideTextField)))
                 .addContainerGap())
         );
 
@@ -287,6 +319,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         transportField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<select one>", "Bus", "Flight" }));
 
         roomTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<select one>", "Queen Size Bed", "Twin Size Bed" }));
+        roomTypeField.setEnabled(false);
         roomTypeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roomTypeFieldActionPerformed(evt);
@@ -336,6 +369,11 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         hotelynCheck.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 hotelynCheckMouseClicked(evt);
+            }
+        });
+        hotelynCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hotelynCheckActionPerformed(evt);
             }
         });
 
@@ -445,7 +483,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
 
     private void addBookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookingMouseClicked
         // TODO add your handling code here:
-
+        //assigning variable to values got from form fields
         String nameValue = nameField.getText();
         String phNumValue = phNumField.getText();
         String hotelynValue = hotelyn ? "Yes" : "No";
@@ -461,8 +499,9 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
         Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
 
+        //calling add function
         try {
-            BookingDao.addBooking(bookingInput, travellerInput, 2);
+            BookingDao.addBooking(bookingInput, travellerInput, 1);
         } catch (SQLException ex) {
             Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -496,7 +535,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     }//GEN-LAST:event_roomNoFieldActionPerformed
 
     private void hotelynCheckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotelynCheckMouseClicked
-        // TODO add your handling code here:
+        
         hotelyn = hotelynCheck.isSelected();
     }//GEN-LAST:event_hotelynCheckMouseClicked
 
@@ -528,6 +567,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
         Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
         bookingInput.setBooking_id(idValue);
+        
+        
         try {
             BookingDao.editBooking(bookingInput, travellerInput);
         } catch (SQLException ex) {
@@ -560,6 +601,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         // TODO add your handling code here:
         // TODO add your handling code here:
         //        {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room"}
+        
+        
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
         String tname = tModel.getValueAt(bookingsTable.getSelectedRow(), 1).toString();
         String tEmail = tModel.getValueAt(bookingsTable.getSelectedRow(), 2).toString();
@@ -623,7 +666,15 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void deselectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deselectButtonActionPerformed
-        // TODO add your handling code here:
+        if (deselectButton.isSelected()){
+            addBooking.setEnabled(true);
+            
+            
+        }
+        else{
+            addBooking.setEnabled(false);
+            
+        }   
         bookingsTable.clearSelection();
         nameField.setText("");
         phNumField.setText("");
@@ -638,9 +689,29 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         roomTypeField.setSelectedItem("<select one>");
     }//GEN-LAST:event_deselectButtonActionPerformed
 
+    private void hotelynCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelynCheckActionPerformed
+        if (hotelynCheck.isSelected()){
+            roomTypeField.setEnabled(true);
+            roomNoField.setEnabled(true);
+            
+        }
+        else{
+            roomTypeField.setEnabled(false);
+            roomNoField.setEnabled(false);
+        }
+        
+        
+            
+    }//GEN-LAST:event_hotelynCheckActionPerformed
+
+    private void addBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addBookingActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBooking;
+    private javax.swing.JButton billButton;
     private javax.swing.JTable bookingsTable;
     private com.toedter.calendar.JDateChooser dateField;
     private javax.swing.JButton deleteButton;
@@ -649,7 +720,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> guideField;
     private javax.swing.JTextField guideTextField;
     private javax.swing.JCheckBox hotelynCheck;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
