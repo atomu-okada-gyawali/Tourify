@@ -210,7 +210,7 @@ public class users extends javax.swing.JPanel {
         String tPhnum = tModel.getValueAt(usersTable.getSelectedRow(), 4).toString();
         String tEmail = tModel.getValueAt(usersTable.getSelectedRow(), 5).toString();
         String tRole = tModel.getValueAt(usersTable.getSelectedRow(), 6).toString();
-        
+
         fnameField.setText(tFname);
         lnameField.setText(tLname);
         unameField.setText(tUname);
@@ -225,50 +225,52 @@ public class users extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
-        
+
         int selectedRow = usersTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Select a row", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
             if (fnameField.getText().equals("")
-                    || lnameField.getText().equals("") 
+                    || lnameField.getText().equals("")
                     || unameField.getText().equals("")
                     || phnumField.getText().equals("")
                     || emailField.getText().equals("")
                     || roleField.getSelectedItem().equals("<select one>")) {
-            JOptionPane.showMessageDialog(null, "Insufficient credentials", "Error", JOptionPane.INFORMATION_MESSAGE);
-                
-            }else{
-            int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(), 0));
-            String nameValue = fnameField.getText();
-            String lnameValue = lnameField.getText();
-            String unameValue = unameField.getText();
-            String phnumValue = phnumField.getText();
-            String emailValue = emailField.getText();
-            String roleValue = String.valueOf(roleField.getSelectedItem());
-            
-            User user = new User(nameValue, lnameValue, unameValue, phnumValue, emailValue, roleValue);
-            user.setUser_id(idValue);
-            
-            try {
-                UserDao.editUser(user);
-            } catch (SQLException ex) {
-                Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            try {
-                usersTable.setModel(new DefaultTableModel(UserTable.getUsers(), new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
-            } catch (SQLException e) {
-                e.printStackTrace();
-                usersTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
-                
-                fnameField.setText("");
-                lnameField.setText("");
-                unameField.setText("");
-                phnumField.setText("");
-                emailField.setText("");
-                roleField.setSelectedItem("<select one>");
-            }  
+                JOptionPane.showMessageDialog(null, "Insufficient credentials", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+            } else if (!(emailField.getText().contains("@") &&  emailField.getText().contains("."))) {
+                JOptionPane.showMessageDialog(null, "Provide valid email address", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(), 0));
+                String nameValue = fnameField.getText();
+                String lnameValue = lnameField.getText();
+                String unameValue = unameField.getText();
+                String phnumValue = phnumField.getText();
+                String emailValue = emailField.getText();
+                String roleValue = String.valueOf(roleField.getSelectedItem());
+
+                User user = new User(nameValue, lnameValue, unameValue, phnumValue, emailValue, roleValue);
+                user.setUser_id(idValue);
+
+                try {
+                    UserDao.editUser(user);
+                } catch (SQLException ex) {
+                    Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                try {
+                    usersTable.setModel(new DefaultTableModel(UserTable.getUsers(), new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    usersTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
+
+                    fnameField.setText("");
+                    lnameField.setText("");
+                    unameField.setText("");
+                    phnumField.setText("");
+                    emailField.setText("");
+                    roleField.setSelectedItem("<select one>");
+                }
             }
         }
     }//GEN-LAST:event_updateButtonMouseClicked
@@ -281,13 +283,13 @@ public class users extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Select a row", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
             int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(), 0));
-            
+
             try {
                 UserDao.deleteUser(idValue);
             } catch (SQLException ex) {
                 Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 usersTable.setModel(new DefaultTableModel(UserTable.getUsers(), new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
             } catch (SQLException e) {

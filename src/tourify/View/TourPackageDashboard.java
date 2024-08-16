@@ -590,6 +590,8 @@ public class TourPackageDashboard extends javax.swing.JPanel {
                 || busField.getText().equals("")
                 || packagePriceField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else if (hotelContactField.getText().length() != 10) {
+            JOptionPane.showMessageDialog(null, "Hotel contact must be of ten digits", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
             int noOfNights = Integer.parseInt(noOfNightsFields.getText());
             int flightPrice = Integer.parseInt(flightPriceField.getText());
@@ -682,41 +684,43 @@ public class TourPackageDashboard extends javax.swing.JPanel {
                     || busField.getText().equals("")
                     || packagePriceField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
-            }else{
-            String packageName = packageField.getText();
-            int noOfNights = Integer.parseInt(noOfNightsFields.getText());
-            int flightPrice = Integer.parseInt(flightPriceField.getText());
-            int queenPricing = Integer.parseInt(queenPrice.getText());
-            int twinPricing = Integer.parseInt(twinPrice.getText());
-            String destination = destinationField.getText();
-            int busPrice = Integer.parseInt(busField.getText());
-            int packagePrice = Integer.parseInt(packagePriceField.getText());
-            String hotelphone = hotelContactField.getText();
+            } else if (hotelContactField.getText().length() != 10) {
+                JOptionPane.showMessageDialog(null, "Hotel contact must be of ten digits", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                String packageName = packageField.getText();
+                int noOfNights = Integer.parseInt(noOfNightsFields.getText());
+                int flightPrice = Integer.parseInt(flightPriceField.getText());
+                int queenPricing = Integer.parseInt(queenPrice.getText());
+                int twinPricing = Integer.parseInt(twinPrice.getText());
+                String destination = destinationField.getText();
+                int busPrice = Integer.parseInt(busField.getText());
+                int packagePrice = Integer.parseInt(packagePriceField.getText());
+                String hotelphone = hotelContactField.getText();
 
-            DefaultTableModel tModel = (DefaultTableModel) tpTable.getModel();
-            int id = Integer.parseInt(tModel.getValueAt(tpTable.getSelectedRow(), 0).toString());
+                DefaultTableModel tModel = (DefaultTableModel) tpTable.getModel();
+                int id = Integer.parseInt(tModel.getValueAt(tpTable.getSelectedRow(), 0).toString());
 
-            Tour_Package newtourpackage = new Tour_Package(packageName, destination, packagePrice, noOfNights, itineraryByte,
-                    pamphletByte, busPrice, flightPrice, hotelphone,
-                    twinPricing, queenPricing);
-            try {
-                UpdateTour_package(newtourpackage, id);
-                emptyFields();
-            } catch (SQLException ex) {
-                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            try {
-                tpTable.setModel(new DefaultTableModel(getTourPackageNames(), new String[]{"ID", "Package", "Destination", "Package Price", "Night NO", "Bus Price", "Flight Price", "Hotel Contact", "Twin Price", "Queen Price"}) {
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
+                Tour_Package newtourpackage = new Tour_Package(packageName, destination, packagePrice, noOfNights, itineraryByte,
+                        pamphletByte, busPrice, flightPrice, hotelphone,
+                        twinPricing, queenPricing);
+                try {
+                    UpdateTour_package(newtourpackage, id);
+                    emptyFields();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                );
-            } catch (SQLException ex) {
-                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            tpTable.clearSelection();
+
+                try {
+                    tpTable.setModel(new DefaultTableModel(getTourPackageNames(), new String[]{"ID", "Package", "Destination", "Package Price", "Night NO", "Bus Price", "Flight Price", "Hotel Contact", "Twin Price", "Queen Price"}) {
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    }
+                    );
+                } catch (SQLException ex) {
+                    Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tpTable.clearSelection();
             }
         }
     }//GEN-LAST:event_updateButtonMouseClicked

@@ -495,6 +495,8 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                 || guideTextField.getText().equals("")) {
 
             JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else if (phNumValue.length() != 10) {
+            JOptionPane.showMessageDialog(null, "Phone number must be of ten digits", "Error", JOptionPane.INFORMATION_MESSAGE);
         } else {
             int tourPackageIdValue = Integer.parseInt(tpField.getText());
             Date date = dateField.getDate();
@@ -589,13 +591,15 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                         || travellerNoField.getText().equals("")
                         || guideTextField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                } else if (phNumValue.length() != 10) {
+                    JOptionPane.showMessageDialog(null, "Phone number must be of ten digits", "Error", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     int tourPackageIdValue = Integer.parseInt(tpField.getText());
                     Date date = dateField.getDate();
                     int travellerNoValue = Integer.parseInt(travellerNoField.getText());
                     int guideIdValue = Integer.parseInt(guideTextField.getText());
                     int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
-                    
+
                     Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
                     Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
                     bookingInput.setBooking_id(idValue);

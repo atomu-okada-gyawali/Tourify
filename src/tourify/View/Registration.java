@@ -303,11 +303,12 @@ public class Registration extends javax.swing.JFrame {
             if (emptycount>0) {
                 JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);   
                
-        }else try {
-            if(!doesUserExist(username)){
-                JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
-            }else if (pass.equals(cpass)) {
-                JOptionPane.showMessageDialog(null, "Username already exists. try different one", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+                try{
+            if(doesUserExist(username)){
+                JOptionPane.showMessageDialog(null, "User exists", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }else if (!(pass.equals(cpass))) {
+                JOptionPane.showMessageDialog(null, "Mismatched passwords", "Error", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 User newUser = new User(fname, lname, username, phnumber, email, role);
                 newUser.setUser_password(pass);
@@ -321,7 +322,7 @@ public class Registration extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }}
 
 
     }//GEN-LAST:event_registerButtonMouseClicked
