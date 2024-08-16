@@ -10,12 +10,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import tourify.Controller.BookingDao;
 import tourify.Controller.BookingTable;
 import tourify.Controller.UserDao;
 import tourify.Model.Booking;
 import tourify.Model.Traveller;
+import tourify.View.Billpage;
 
 /**
  *
@@ -62,8 +65,6 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         travellerNoField = new javax.swing.JTextField();
         guideTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -127,6 +128,11 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         billButton.setBackground(new java.awt.Color(0, 102, 102));
         billButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/bill.png"))); // NOI18N
         billButton.setText("Bill");
+        billButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                billButtonMouseClicked(evt);
+            }
+        });
 
         updateButton.setBackground(new java.awt.Color(0, 102, 102));
         updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/updates.png"))); // NOI18N
@@ -179,7 +185,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addBooking, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,15 +231,14 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(tpField, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(138, 138, 138)
+                .addGap(129, 129, 129)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(112, 112, 112)
+                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(124, 124, 124)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(roomNoField, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -245,13 +250,14 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel9)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tpField, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roomNoField))
+                    .addComponent(tpField, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(roomNoField)
+                    .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -265,29 +271,19 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("View Itinerary");
-
-        jButton2.setText("View Pamphlet");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(travellerNoField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(132, 132, 132)
+                .addGap(119, 119, 119)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(guideTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(108, 108, 108)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(guideTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,12 +294,9 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(travellerNoField, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                        .addComponent(guideTextField)))
-                .addContainerGap())
+                    .addComponent(travellerNoField, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(guideTextField))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Email");
@@ -333,19 +326,18 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(transportField, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(112, 112, 112)
+                .addGap(120, 120, 120)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(roomTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(188, 188, 188))
+                .addGap(209, 209, 209))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,12 +347,12 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(roomTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(transportField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7))
+                .addGap(19, 19, 19))
         );
 
         jLabel17.setText("Full Name");
@@ -390,15 +382,16 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(139, 139, 139)
+                .addGap(127, 127, 127)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(phNumField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(121, 121, 121)
+                        .addGap(120, 120, 120)
                         .addComponent(hotelynCheck))
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -422,42 +415,36 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 918, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 3, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 41, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 328, Short.MAX_VALUE))
+                .addGap(0, 404, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -484,49 +471,70 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     private void addBookingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookingMouseClicked
         // TODO add your handling code here:
         //assigning variable to values got from form fields
+        int roomNoValue;
+        String roomTypeValue;
         String nameValue = nameField.getText();
         String phNumValue = phNumField.getText();
         String hotelynValue = hotelyn ? "Yes" : "No";
+        if (hotelyn) {
+            roomNoValue = Integer.parseInt(roomNoField.getText());
+            roomTypeValue = String.valueOf(roomTypeField.getSelectedItem());
+        } else {
+            roomTypeValue = "None";
+            roomNoValue = 0;
+        }
         String emailValue = emailField.getText();
         String transportValue = String.valueOf(transportField.getSelectedItem());
-        String roomTypeValue = String.valueOf(roomTypeField.getSelectedItem());
-        int roomNoValue = Integer.parseInt(roomNoField.getText());
-        int tourPackageIdValue = Integer.parseInt(tpField.getText());
-        Date date = dateField.getDate();
-        int travellerNoValue = Integer.parseInt(travellerNoField.getText());
-        int guideIdValue = Integer.parseInt(guideTextField.getText());
+        if (nameValue.equals("")
+                || phNumValue.equals("")
+                || emailValue.equals("")
+                || transportValue.equals("<select one>")
+                || tpField.getText().equals("")
+                || dateField == null
+                || travellerNoField.getText().equals("")
+                || guideTextField.getText().equals("")) {
 
-        Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
-        Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
+            JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int tourPackageIdValue = Integer.parseInt(tpField.getText());
+            Date date = dateField.getDate();
+            int travellerNoValue = Integer.parseInt(travellerNoField.getText());
+            int guideIdValue = Integer.parseInt(guideTextField.getText());
+            Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
+            Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
 
-        //calling add function
-        try {
-            BookingDao.addBooking(bookingInput, travellerInput, 1);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //calling add function
+            try {
+                BookingDao.addBooking(bookingInput, travellerInput);
+                nameField.setText("");
+                phNumField.setText("");
+                hotelynCheck.setSelected(false);
+                roomNoField.setText("");
+                tpField.setText("");
+                travellerNoField.setText("");
+                guideTextField.setText("");
+                dateField.setDate(null);
+                emailField.setText("");
+                transportField.setSelectedItem("<select one>");
+                roomTypeField.setSelectedItem("<select one>");
 
-        try {
-            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
+                try {
+                    bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    });
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    bookingsTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", " Guide Id"}));
                 }
-            });
-        } catch (SQLException e) {
-            e.printStackTrace();
-            bookingsTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", " Guide Id"}));
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Unaccessible foreign keys", "Error", JOptionPane.INFORMATION_MESSAGE);
+                Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        nameField.setText("");
-        phNumField.setText("");
-        hotelynCheck.setSelected(false);
-        roomNoField.setText("");
-        tpField.setText("");
-        travellerNoField.setText("");
-        guideTextField.setText("");
-        dateField.setDate(null);
-        emailField.setText("");
-        transportField.setSelectedItem("<select one>");
-        roomTypeField.setSelectedItem("<select one>");
+
 
     }//GEN-LAST:event_addBookingMouseClicked
 
@@ -535,7 +543,7 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     }//GEN-LAST:event_roomNoFieldActionPerformed
 
     private void hotelynCheckMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotelynCheckMouseClicked
-        
+
         hotelyn = hotelynCheck.isSelected();
     }//GEN-LAST:event_hotelynCheckMouseClicked
 
@@ -549,60 +557,85 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
         // TODO add your handling code here:
-        String nameValue = nameField.getText();
-        String phNumValue = phNumField.getText();
-        String hotelynValue = hotelyn ? "Yes" : "No";
-        String emailValue = emailField.getText();
-        String transportValue = String.valueOf(transportField.getSelectedItem());
-        String roomTypeValue = String.valueOf(roomTypeField.getSelectedItem());
-        int roomNoValue = Integer.parseInt(roomNoField.getText());
-        int tourPackageIdValue = Integer.parseInt(tpField.getText());
-        Date date = dateField.getDate();
-        int travellerNoValue = Integer.parseInt(travellerNoField.getText());
-        int guideIdValue = Integer.parseInt(guideTextField.getText());
 
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
-        int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
 
-        Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
-        Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
-        bookingInput.setBooking_id(idValue);
-        
-        
-        try {
-            BookingDao.editBooking(bookingInput, travellerInput);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        int selectedRow = bookingsTable.getSelectedRow();
 
-        try {
-            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Select a row first", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                int roomNoValue;
+                String roomTypeValue;
+                String nameValue = nameField.getText();
+                String phNumValue = phNumField.getText();
+                String emailValue = emailField.getText();
+                String transportValue = String.valueOf(transportField.getSelectedItem());
+                String hotelynValue = hotelyn ? "Yes" : "No";
+                if (hotelyn) {
+                    roomNoValue = Integer.parseInt(roomNoField.getText());
+                    roomTypeValue = String.valueOf(roomTypeField.getSelectedItem());
+                } else {
+                    roomTypeValue = "None";
+                    roomNoValue = 0;
                 }
-            });
-        } catch (SQLException ex) {
-            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+                if (nameValue.equals("")
+                        || phNumValue.equals("")
+                        || emailValue.equals("")
+                        || transportValue.equals("<select one>")
+                        || tpField.getText().equals("")
+                        || dateField == null
+                        || travellerNoField.getText().equals("")
+                        || guideTextField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    int tourPackageIdValue = Integer.parseInt(tpField.getText());
+                    Date date = dateField.getDate();
+                    int travellerNoValue = Integer.parseInt(travellerNoField.getText());
+                    int guideIdValue = Integer.parseInt(guideTextField.getText());
+                    int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
+                    
+                    Traveller travellerInput = new Traveller(nameValue, emailValue, phNumValue, travellerNoValue);
+                    Booking bookingInput = new Booking(date, hotelynValue, roomNoValue, roomTypeValue, tourPackageIdValue, guideIdValue, "Unpaid", transportValue);//hardcoded
+                    bookingInput.setBooking_id(idValue);
+                    BookingDao.editBooking(bookingInput, travellerInput);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                });
+            } catch (SQLException ex) {
+                Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            nameField.setText("");
+            phNumField.setText("");
+            hotelynCheck.setSelected(false);
+            roomNoField.setText("");
+            tpField.setText("");
+            travellerNoField.setText("");
+            guideTextField.setText("");
+            dateField.setDate(null);
+            emailField.setText("");
+            transportField.setSelectedItem("<select one>");
+            roomTypeField.setSelectedItem("<select one>");
+
         }
-        nameField.setText("");
-        phNumField.setText("");
-        hotelynCheck.setSelected(false);
-        roomNoField.setText("");
-        tpField.setText("");
-        travellerNoField.setText("");
-        guideTextField.setText("");
-        dateField.setDate(null);
-        emailField.setText("");
-        transportField.setSelectedItem("<select one>");
-        roomTypeField.setSelectedItem("<select one>");
+
     }//GEN-LAST:event_updateButtonMouseClicked
 
     private void bookingsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookingsTableMouseClicked
         // TODO add your handling code here:
         // TODO add your handling code here:
         //        {"ID","Name","Email","Tour Package","No of Traveller","Contact","Transport","Date","Guide","Hotel","Room type","No of room"}
-        
-        
+
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
         String tname = tModel.getValueAt(bookingsTable.getSelectedRow(), 1).toString();
         String tEmail = tModel.getValueAt(bookingsTable.getSelectedRow(), 2).toString();
@@ -635,46 +668,43 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tModel = (DefaultTableModel) bookingsTable.getModel();
-        int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
+        int selectedRow = bookingsTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Must choose a row before deletion", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                int idValue = ((Integer) tModel.getValueAt(bookingsTable.getSelectedRow(), 0));
+                BookingDao.deleteBooking(idValue);
+            } catch (SQLException ex) {
+                Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        try {
-            BookingDao.deleteBooking(idValue);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            try {
+                bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                });
+            } catch (SQLException ex) {
+                Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
 
-        try {
-            bookingsTable.setModel(new DefaultTableModel(BookingTable.getBookings1(), new String[]{"ID", "Name", "Email", "Tour Package", "No of Traveller", "Contact", "Transport", "Date", "Guide", "Hotel", "Room type", "No of room", "Tour Package Id", "Guide Id"}) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            });
-        } catch (SQLException ex) {
-            Logger.getLogger(BookingsDashboard1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            nameField.setText("");
+            phNumField.setText("");
+            hotelynCheck.setSelected(false);
+            roomNoField.setText("");
+            tpField.setText("");
+            travellerNoField.setText("");
+            guideTextField.setText("");
+            dateField.setDate(null);
+            emailField.setText("");
+            transportField.setSelectedItem("<select one>");
+            roomTypeField.setSelectedItem("<select one>");
         }
-        nameField.setText("");
-        phNumField.setText("");
-        hotelynCheck.setSelected(false);
-        roomNoField.setText("");
-        tpField.setText("");
-        travellerNoField.setText("");
-        guideTextField.setText("");
-        dateField.setDate(null);
-        emailField.setText("");
-        transportField.setSelectedItem("<select one>");
-        roomTypeField.setSelectedItem("<select one>");
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void deselectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deselectButtonActionPerformed
-        if (deselectButton.isSelected()){
-            addBooking.setEnabled(true);
-            
-            
-        }
-        else{
-            addBooking.setEnabled(false);
-            
-        }   
+
         bookingsTable.clearSelection();
         nameField.setText("");
         phNumField.setText("");
@@ -687,26 +717,33 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
         emailField.setText("");
         transportField.setSelectedItem("<select one>");
         roomTypeField.setSelectedItem("<select one>");
+
+
     }//GEN-LAST:event_deselectButtonActionPerformed
 
     private void hotelynCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelynCheckActionPerformed
-        if (hotelynCheck.isSelected()){
+        if (hotelynCheck.isSelected()) {
             roomTypeField.setEnabled(true);
             roomNoField.setEnabled(true);
-            
-        }
-        else{
+
+        } else {
             roomTypeField.setEnabled(false);
             roomNoField.setEnabled(false);
         }
-        
-        
-            
+
+
     }//GEN-LAST:event_hotelynCheckActionPerformed
 
     private void addBookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookingActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addBookingActionPerformed
+
+    private void billButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_billButtonMouseClicked
+        // TODO add your handling code here:
+
+        Billpage bp = new Billpage();
+        bp.setVisible(true);
+    }//GEN-LAST:event_billButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -720,8 +757,6 @@ public class BookingsDashboard1 extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> guideField;
     private javax.swing.JTextField guideTextField;
     private javax.swing.JCheckBox hotelynCheck;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;

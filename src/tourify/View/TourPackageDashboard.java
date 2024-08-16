@@ -4,10 +4,33 @@
  */
 package tourify.View;
 
+import com.mysql.cj.jdbc.Blob;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import javax.swing.ImageIcon;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import static tourify.Controller.Tour_PackageDao.DeleteTour_package;
+import static tourify.Controller.Tour_PackageDao.UpdateTour_package;
+import static tourify.Controller.Tour_PackageDao.addTourPackage;
+import static tourify.Controller.Tour_PackageTable.getPictures;
+
+import static tourify.Controller.Tour_PackageTable.getTourPackageNames;
+import tourify.Model.Tour_Package;
 
 /**
  *
@@ -15,11 +38,55 @@ import javax.swing.JFileChooser;
  */
 public class TourPackageDashboard extends javax.swing.JPanel {
 
+    public String itineraryPath = "";
+    public String pamphletPath = "";
+    public byte[] itineraryByte = new byte[0];
+    public byte[] pamphletByte = new byte[0];
+
     /**
      * Creates new form TourPackageDashboard
      */
+    public static BufferedImage convertByteArrayToImage(byte[] imageBytes) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+        return ImageIO.read(bais);
+    }
+
     public TourPackageDashboard() {
         initComponents();
+    }
+
+    public void emptyFields() {
+        packageField.setText("");
+        noOfNightsFields.setText("");
+        flightPriceField.setText("");
+        queenPrice.setText("");
+        twinPrice.setText("");
+        destinationField.setText("");
+        busField.setText("");
+        packagePriceField.setText("");
+        hotelContactField.setText("");
+
+        phampletLabel.setIcon(null);
+        itineraryLabel.setIcon(null);
+    }
+
+    public static byte[] pngToByte(String inputPath) {
+        byte[] outputByte = new byte[0];
+
+        try {
+            Path path = Paths.get(inputPath);
+            outputByte = Files.readAllBytes(path);
+
+        } catch (IOException e) {
+            System.err.println("IOException: " + e.getMessage());
+
+        }
+        return outputByte;
+    }
+
+    public static BufferedImage convertToBufferedImage(byte[] imageData) throws IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+        return ImageIO.read(bis);
     }
 
     /**
@@ -31,118 +98,177 @@ public class TourPackageDashboard extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        defaultTypeMapper1 = new com.sun.jna.DefaultTypeMapper();
-        javax.swing.JLabel Package = new javax.swing.JLabel();
-        javax.swing.JTextField jTextField1 = new javax.swing.JTextField();
-        javax.swing.JLabel Nights = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        javax.swing.JLabel Fprice = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        javax.swing.JLabel Qbed = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        javax.swing.JLabel Dname = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        javax.swing.JLabel Bstop = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        javax.swing.JLabel Hcontact = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        javax.swing.JLabel Tsizebed = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        javax.swing.JTable jTable1 = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        itineraryLabel = new javax.swing.JLabel();
-        javax.swing.JButton Add = new javax.swing.JButton();
-        javax.swing.JButton View = new javax.swing.JButton();
-        phampletLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
+        deselectButton = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        javax.swing.JLabel Nights = new javax.swing.JLabel();
+        packageField = new javax.swing.JTextField();
+        noOfNightsFields = new javax.swing.JTextField();
+        javax.swing.JLabel Hcontact = new javax.swing.JLabel();
+        javax.swing.JLabel Package = new javax.swing.JLabel();
+        packagePriceField = new javax.swing.JTextField();
+        javax.swing.JLabel Tsizebed = new javax.swing.JLabel();
+        javax.swing.JLabel Fprice = new javax.swing.JLabel();
+        javax.swing.JLabel Bstop = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        busField = new javax.swing.JTextField();
+        javax.swing.JLabel Dname = new javax.swing.JLabel();
+        queenPrice = new javax.swing.JTextField();
+        hotelContactField = new javax.swing.JTextField();
+        javax.swing.JLabel Qbed = new javax.swing.JLabel();
+        flightPriceField = new javax.swing.JTextField();
+        twinPrice = new javax.swing.JTextField();
+        destinationField = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        javax.swing.JButton addItenary = new javax.swing.JButton();
+        javax.swing.JButton viewPhamplet = new javax.swing.JButton();
+        itineraryLabel = new javax.swing.JLabel();
+        phampletLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tpTable = new javax.swing.JTable();
 
-        Package.setText("Package Name");
+        addButton.setBackground(new java.awt.Color(0, 102, 102));
+        addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/add.png"))); // NOI18N
+        addButton.setText("Add");
+        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
+        });
+
+        deleteButton.setBackground(new java.awt.Color(0, 102, 102));
+        deleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/delete.png"))); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        updateButton.setBackground(new java.awt.Color(0, 102, 102));
+        updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/updates.png"))); // NOI18N
+        updateButton.setText("Update");
+        updateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateButtonMouseClicked(evt);
+            }
+        });
+
+        deselectButton.setBackground(new java.awt.Color(0, 102, 102));
+        deselectButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/choice.png"))); // NOI18N
+        deselectButton.setText("Deselect");
+        deselectButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deselectButtonMouseClicked(evt);
+            }
+        });
+        deselectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deselectButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addButton, deleteButton, deselectButton, updateButton});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(deselectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         Nights.setText("No of Nights");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        packageField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                packageFieldActionPerformed(evt);
             }
         });
 
-        Fprice.setText("Flight Price");
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        noOfNightsFields.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
-        Qbed.setText("Queen Sized Bed Room Price");
-
-        Dname.setText("Destination Name");
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
-            }
-        });
-
-        Bstop.setText("Bus Price");
-
-        jTextField6.setToolTipText("");
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                noOfNightsFieldsActionPerformed(evt);
             }
         });
 
         Hcontact.setText("Hotel Contact");
 
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        Package.setText("Package Name");
+
+        packagePriceField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                packagePriceFieldActionPerformed(evt);
             }
         });
 
         Tsizebed.setText("Twin Size Bed Room Price");
 
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        Fprice.setText("Flight Price");
+
+        Bstop.setText("Bus Price");
+
+        jLabel1.setText("Package Price");
+
+        busField.setToolTipText("");
+        busField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                busFieldActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        Dname.setText("Destination Name");
 
-            },
-            new String [] {
-                "SN", "Package", "Location", "Nights", "Location", "Hotel", "Total"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable1);
-
-        itineraryLabel.setBackground(new java.awt.Color(204, 204, 204));
-        itineraryLabel.setForeground(new java.awt.Color(204, 204, 204));
-        itineraryLabel.setText(" ");
-
-        Add.setBackground(new java.awt.Color(0, 102, 102));
-        Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/adddd.png"))); // NOI18N
-        Add.setText("Add Itineary");
-        Add.addActionListener(new java.awt.event.ActionListener() {
+        hotelContactField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddActionPerformed(evt);
+                hotelContactFieldActionPerformed(evt);
             }
         });
 
-        View.setBackground(new java.awt.Color(0, 102, 102));
-        View.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/big view.png"))); // NOI18N
-        View.setText("View Phamplates ");
-        View.addActionListener(new java.awt.event.ActionListener() {
+        Qbed.setText("Queen Sized Bed Room Price");
+
+        flightPriceField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ViewActionPerformed(evt);
+                flightPriceFieldActionPerformed(evt);
+            }
+        });
+
+        twinPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                twinPriceActionPerformed(evt);
+            }
+        });
+
+        destinationField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                destinationFieldActionPerformed(evt);
             }
         });
 
@@ -151,249 +277,480 @@ public class TourPackageDashboard extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(packageField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noOfNightsFields)
+                    .addComponent(flightPriceField)
+                    .addComponent(Qbed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Fprice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Nights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Package, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(queenPrice))
+                .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 240, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(View, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Add, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(Dname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(itineraryLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(phampletLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(twinPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hotelContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(busField, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(destinationField, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(29, 29, 29)
+                        .addComponent(packagePriceField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addComponent(Bstop, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(Hcontact, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(193, 193, 193)
+                        .addComponent(Tsizebed, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {busField, destinationField, hotelContactField, twinPrice});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(itineraryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Dname, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Package, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(packagePriceField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(destinationField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(packageField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Bstop, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Nights, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noOfNightsFields, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(busField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Hcontact, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(Fprice, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(flightPriceField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hotelContactField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(phampletLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(View, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Qbed, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Tsizebed, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(queenPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(twinPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54))
         );
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/add.png"))); // NOI18N
-        jButton1.setText("Add");
-
-        jButton4.setBackground(new java.awt.Color(0, 102, 102));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/delete.png"))); // NOI18N
-        jButton4.setText("Delete");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        addItenary.setBackground(new java.awt.Color(0, 102, 102));
+        addItenary.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/adddd.png"))); // NOI18N
+        addItenary.setText("Add Itineary");
+        addItenary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                addItenaryActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 102, 102));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/updates.png"))); // NOI18N
-        jButton3.setText("Update");
+        viewPhamplet.setBackground(new java.awt.Color(0, 102, 102));
+        viewPhamplet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/big view.png"))); // NOI18N
+        viewPhamplet.setText("View Phamplates ");
+        viewPhamplet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewPhampletActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(0, 102, 102));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/analysis.png"))); // NOI18N
-        jButton2.setText("View");
+        itineraryLabel.setBackground(new java.awt.Color(255, 255, 255));
+        itineraryLabel.setForeground(new java.awt.Color(255, 255, 255));
+        itineraryLabel.setText(" ");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        phampletLabel.setBackground(new java.awt.Color(255, 255, 255));
+        phampletLabel.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Nights, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Package, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Fprice, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Qbed)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(Dname, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                                            .addComponent(Bstop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(Hcontact, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(6, 6, 6))
-                                        .addComponent(Tsizebed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 222, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addItenary, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewPhamplet))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Package, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(Dname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Bstop, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Nights, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Fprice, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Hcontact, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Qbed, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Tsizebed, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88))
+                        .addComponent(itineraryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(phampletLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 130, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(itineraryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(addItenary, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(phampletLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(viewPhamplet, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+        );
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        try{
+            tpTable.setModel(new DefaultTableModel(getTourPackageNames(),new String[] {"ID","Package","Destination","Package Price","Night NO","Bus Price","Flight Price","Hotel Contact","Twin Price","Queen Price"})
+                {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                });
+            }catch(SQLException e){
+                e.printStackTrace();
+                tpTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","Package","Destination","Package Price","Night NO","Bus Price","Flight Price","Hotel Contact","Twin Price","Queen Price"}));
+            }
+            tpTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tpTableMouseClicked(evt);
+                }
+            });
+            jScrollPane1.setViewportView(tpTable);
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 920, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 606, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap(7, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(218, 218, 218))
+            );
+        }// </editor-fold>//GEN-END:initComponents
+
+    private void noOfNightsFieldsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noOfNightsFieldsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_noOfNightsFieldsActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void flightPriceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flightPriceFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_flightPriceFieldActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void busFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_busFieldActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void twinPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twinPriceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_twinPriceActionPerformed
 
-    private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
+    private void viewPhampletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPhampletActionPerformed
         JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "bmp");
+        chooser.setFileFilter(filter);
+        chooser.setAcceptAllFileFilterUsed(false);
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
-        String filename = f.getAbsolutePath();
-        ImageIcon imageIcon = new ImageIcon(filename);
-        Image resizedImage = imageIcon.getImage().getScaledInstance(335,129, Image.SCALE_SMOOTH);
+        pamphletPath = f.getAbsolutePath();
+
+        ImageIcon imageIcon = new ImageIcon(pamphletPath);
+        Image resizedImage = imageIcon.getImage().getScaledInstance(335, 129, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
         phampletLabel.setIcon(resizedIcon);
-    }//GEN-LAST:event_ViewActionPerformed
+        pamphletByte = pngToByte(pamphletPath);
 
-    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
+    }//GEN-LAST:event_viewPhampletActionPerformed
+
+    private void addItenaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItenaryActionPerformed
         JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png", "gif", "bmp");
+        chooser.setFileFilter(filter);
+        chooser.setAcceptAllFileFilterUsed(false);
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
-        String filename = f.getAbsolutePath();
-        ImageIcon imageIcon = new ImageIcon(filename);
-        Image resizedImage = imageIcon.getImage().getScaledInstance(335,129, Image.SCALE_SMOOTH);
+        itineraryPath = f.getAbsolutePath();
+        ImageIcon imageIcon = new ImageIcon(itineraryPath);
+        Image resizedImage = imageIcon.getImage().getScaledInstance(335, 129, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(resizedImage);
         itineraryLabel.setIcon(resizedIcon);
+        itineraryByte = pngToByte(itineraryPath);
 
-    }//GEN-LAST:event_AddActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_addItenaryActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        DefaultTableModel tModel = (DefaultTableModel) tpTable.getModel();
+        int selectedRow = tpTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Select a row first.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int id = Integer.parseInt(tModel.getValueAt(tpTable.getSelectedRow(), 0).toString());
+            try {
+                DeleteTour_package(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            emptyFields();
+            try {
+                tpTable.setModel(new DefaultTableModel(getTourPackageNames(), new String[]{"ID", "Package", "Destination", "Package Price", "Night NO", "Bus Price", "Flight Price", "Hotel Contact", "Twin Price", "Queen Price"}) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                }
+                );
+            } catch (SQLException ex) {
+                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tpTable.clearSelection();
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void destinationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_destinationFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_destinationFieldActionPerformed
+
+    private void hotelContactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelContactFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_hotelContactFieldActionPerformed
+
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+
+        String packageName = packageField.getText();
+        String destination = destinationField.getText();
+        String hotelphone = hotelContactField.getText();
+
+        if (packageName.equals("")
+                || destination.equals("")
+                || hotelphone.equals("")
+                || noOfNightsFields.getText().equals("")
+                || flightPriceField.getText().equals("")
+                || queenPrice.getText().equals("")
+                || twinPrice.getText().equals("")
+                || busField.getText().equals("")
+                || packagePriceField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int noOfNights = Integer.parseInt(noOfNightsFields.getText());
+            int flightPrice = Integer.parseInt(flightPriceField.getText());
+            int queenPricing = Integer.parseInt(queenPrice.getText());
+            int twinPricing = Integer.parseInt(twinPrice.getText());
+            int busPrice = Integer.parseInt(busField.getText());
+            int packagePrice = Integer.parseInt(packagePriceField.getText());
+
+            Tour_Package newtourpackage = new Tour_Package(packageName, destination, packagePrice, noOfNights, itineraryByte,
+                    pamphletByte, busPrice, flightPrice, hotelphone,
+                    twinPricing, queenPricing);
+            try {
+                addTourPackage(newtourpackage);
+                emptyFields();
+            } catch (SQLException ex) {
+                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                tpTable.setModel(new DefaultTableModel(getTourPackageNames(), new String[]{"ID", "Package", "Destination", "Package Price", "Night NO", "Bus Price", "Flight Price", "Hotel Contact", "Twin Price", "Queen Price"}) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                }
+                );
+            } catch (SQLException ex) {
+                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tpTable.clearSelection();
+            emptyFields();
+        }
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_addButtonMouseClicked
+
+    private void packagePriceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packagePriceFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_packagePriceFieldActionPerformed
+
+    private void packageFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packageFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_packageFieldActionPerformed
+
+    private void deselectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deselectButtonActionPerformed
+
+    }//GEN-LAST:event_deselectButtonActionPerformed
+
+    private void tpTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tpTableMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tModel = (DefaultTableModel) tpTable.getModel();
+        int id = Integer.parseInt(tModel.getValueAt(tpTable.getSelectedRow(), 0).toString());
+
+        packageField.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 1));
+        noOfNightsFields.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 4));
+        flightPriceField.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 6));
+        queenPrice.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 9));
+        twinPrice.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 8));
+        destinationField.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 2));
+        busField.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 5));
+        packagePriceField.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 3));
+        hotelContactField.setText((String) tModel.getValueAt(tpTable.getSelectedRow(), 7));
+        try {
+            byte[][] pictures = getPictures(id);
+            Image itinerary = convertByteArrayToImage(pictures[0]).getScaledInstance(335, 129, Image.SCALE_SMOOTH);
+            Image pamphlet = convertByteArrayToImage(pictures[1]).getScaledInstance(335, 129, Image.SCALE_SMOOTH);
+            itineraryLabel.setIcon(new ImageIcon(itinerary));
+            phampletLabel.setIcon(new ImageIcon(pamphlet));
+        } catch (SQLException ex) {
+            Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_tpTableMouseClicked
+
+    private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+
+        // TODO add your handling code here:
+        int selectedRow = tpTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Select a row first", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (packageField.getText().equals("")
+                    || destinationField.getText().equals("")
+                    || hotelContactField.getText().equals("")
+                    || noOfNightsFields.getText().equals("")
+                    || flightPriceField.getText().equals("")
+                    || queenPrice.getText().equals("")
+                    || twinPrice.getText().equals("")
+                    || busField.getText().equals("")
+                    || packagePriceField.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+            String packageName = packageField.getText();
+            int noOfNights = Integer.parseInt(noOfNightsFields.getText());
+            int flightPrice = Integer.parseInt(flightPriceField.getText());
+            int queenPricing = Integer.parseInt(queenPrice.getText());
+            int twinPricing = Integer.parseInt(twinPrice.getText());
+            String destination = destinationField.getText();
+            int busPrice = Integer.parseInt(busField.getText());
+            int packagePrice = Integer.parseInt(packagePriceField.getText());
+            String hotelphone = hotelContactField.getText();
+
+            DefaultTableModel tModel = (DefaultTableModel) tpTable.getModel();
+            int id = Integer.parseInt(tModel.getValueAt(tpTable.getSelectedRow(), 0).toString());
+
+            Tour_Package newtourpackage = new Tour_Package(packageName, destination, packagePrice, noOfNights, itineraryByte,
+                    pamphletByte, busPrice, flightPrice, hotelphone,
+                    twinPricing, queenPricing);
+            try {
+                UpdateTour_package(newtourpackage, id);
+                emptyFields();
+            } catch (SQLException ex) {
+                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                tpTable.setModel(new DefaultTableModel(getTourPackageNames(), new String[]{"ID", "Package", "Destination", "Package Price", "Night NO", "Bus Price", "Flight Price", "Hotel Contact", "Twin Price", "Queen Price"}) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                }
+                );
+            } catch (SQLException ex) {
+                Logger.getLogger(TourPackageDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tpTable.clearSelection();
+            }
+        }
+    }//GEN-LAST:event_updateButtonMouseClicked
+
+    private void deselectButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deselectButtonMouseClicked
+
+        emptyFields();
+        tpTable.clearSelection();
+    }//GEN-LAST:event_deselectButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.sun.jna.DefaultTypeMapper defaultTypeMapper1;
+    private javax.swing.JButton addButton;
+    private javax.swing.JTextField busField;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton deselectButton;
+    private javax.swing.JTextField destinationField;
+    private javax.swing.JTextField flightPriceField;
+    private javax.swing.JTextField hotelContactField;
     private javax.swing.JLabel itineraryLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField noOfNightsFields;
+    private javax.swing.JTextField packageField;
+    private javax.swing.JTextField packagePriceField;
     private javax.swing.JLabel phampletLabel;
+    private javax.swing.JTextField queenPrice;
+    private javax.swing.JTable tpTable;
+    private javax.swing.JTextField twinPrice;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
+
 }

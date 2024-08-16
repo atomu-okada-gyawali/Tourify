@@ -48,7 +48,7 @@ public class BookingTable {
              + " from"
              + " users inner join bookings on users.user_id = bookings.booking_guide"
              + " inner join travellers on  travellers.traveller_id= bookings.traveller_id"
-             + " inner join tour_packages on bookings.tour_package_id = tour_packages.tour_package_id";
+             + " inner join tour_packages on bookings.tour_package_id = tour_packages.tour_package_id where bookings.booking_status='Unpaid'";
       PreparedStatement ps = con.prepareStatement(query);
        ResultSet rs = ps.executeQuery(query);
        

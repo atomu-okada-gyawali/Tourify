@@ -7,24 +7,23 @@ package tourify.View;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tourify.Controller.UserDao;
+import static tourify.Controller.usernameCheck.doesUserExist;
 import tourify.Model.User;
-
 
 /**
  *
  * @author Acer
  */
 public class Registration extends javax.swing.JFrame {
-    
-    
-    
+
     /**
      * Creates new form NewJFrame
      */
     public Registration() {
         initComponents();
-        
+
     }
 
     /**
@@ -86,7 +85,7 @@ public class Registration extends javax.swing.JFrame {
         });
 
         roleEntry.setFont(new java.awt.Font("Rockwell Condensed", 0, 18)); // NOI18N
-        roleEntry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff", "Tour guide" }));
+        roleEntry.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "","Admin", "Staff", "Tour guide" }));
         roleEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 roleEntryActionPerformed(evt);
@@ -105,6 +104,11 @@ public class Registration extends javax.swing.JFrame {
         backButton.setBackground(new java.awt.Color(0, 153, 102));
         backButton.setFont(new java.awt.Font("Rockwell Condensed", 0, 24)); // NOI18N
         backButton.setText("     Back");
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+        });
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -273,32 +277,60 @@ public class Registration extends javax.swing.JFrame {
 
     private void roleEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleEntryActionPerformed
         // TODO add your handling code here:
-        if(evt.getSource()==roleEntry){
-        System.out.println(roleEntry.getSelectedItem());
+        if (evt.getSource() == roleEntry) {
+            System.out.println(roleEntry.getSelectedItem());
         }
     }//GEN-LAST:event_roleEntryActionPerformed
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseClicked
         // TODO add your handling code here:
-    String fname = fnameField.getText();
-    String lname = lnameField.getText();
-    String username = usernameField.getText();
-    String phnumber = phnumberField.getText();
-    String email = emailField.getText();
-    String role = (String) roleEntry.getSelectedItem();
-    String pass = passField.getText();
-    String cpass = cpassField.getText();
-    
-    User newUser = new User(fname,lname,username,phnumber,email,role);
-    newUser.setUser_password(pass);
-        try {
-            UserDao.addUser(newUser);
+        String fname = fnameField.getText();
+        String lname = lnameField.getText();
+        String username = usernameField.getText();
+        String phnumber = phnumberField.getText();
+        String email = emailField.getText();
+        String role = (String) roleEntry.getSelectedItem();
+        String pass = passField.getText();
+        String cpass = cpassField.getText();
+
+        String[] inputArr = {fname, lname, username, phnumber, email, role, pass, cpass};
+        int emptycount = 0;
+        for (String input : inputArr) {
+            if(input.equals("")){
+                emptycount++;
+            }
+            } 
+            if (emptycount>0) {
+                JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);   
+               
+        }else try {
+            if(!doesUserExist(username)){
+                JOptionPane.showMessageDialog(null, "Insufficient credentials.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }else if (pass.equals(cpass)) {
+                JOptionPane.showMessageDialog(null, "Username already exists. try different one", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                User newUser = new User(fname, lname, username, phnumber, email, role);
+                newUser.setUser_password(pass);
+                try {
+                    UserDao.addUser(newUser);
+                    JOptionPane.showMessageDialog(null, "Account successfully created", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Registration.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
+
+
     }//GEN-LAST:event_registerButtonMouseClicked
+
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+
+    }//GEN-LAST:event_backButtonMouseClicked
 
     /**
      * @param args the command line arguments

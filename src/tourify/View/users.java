@@ -9,6 +9,7 @@ import tourify.Controller.UserTable;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import tourify.Controller.UserDao;
 import tourify.Model.User;
 
@@ -50,7 +51,6 @@ public class users extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         usersTable = new javax.swing.JTable();
         deselectButton = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(911, 1025));
         setMinimumSize(new java.awt.Dimension(911, 1025));
@@ -125,15 +125,6 @@ public class users extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourify/View/analysis.png"))); // NOI18N
-        jButton1.setText("view");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,40 +133,30 @@ public class users extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(unameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fnameField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(111, 111, 111)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(81, 81, 81)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(phnumField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fnameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(unameField, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(81, 81, 81)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(phnumField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 919, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 39, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -185,55 +166,50 @@ public class users extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(unameField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phnumField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(unameField, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(phnumField))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(deselectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(roleField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(56, 56, 56)
+                                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                            .addComponent(roleField))))
+                .addGap(80, 80, 80)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void usersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersTableMouseClicked
         // TODO add your handling code here:
-        
-        
+
         DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
-        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(),0));
-        String tFname = tModel.getValueAt(usersTable.getSelectedRow(),1).toString();
-        String tLname = tModel.getValueAt(usersTable.getSelectedRow(),2).toString();
-        String tUname = tModel.getValueAt(usersTable.getSelectedRow(),3).toString();
-        String tPhnum = tModel.getValueAt(usersTable.getSelectedRow(),4).toString();
-        String tEmail = tModel.getValueAt(usersTable.getSelectedRow(),5).toString();
-        String tRole = tModel.getValueAt(usersTable.getSelectedRow(),6).toString();
+        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(), 0));
+        String tFname = tModel.getValueAt(usersTable.getSelectedRow(), 1).toString();
+        String tLname = tModel.getValueAt(usersTable.getSelectedRow(), 2).toString();
+        String tUname = tModel.getValueAt(usersTable.getSelectedRow(), 3).toString();
+        String tPhnum = tModel.getValueAt(usersTable.getSelectedRow(), 4).toString();
+        String tEmail = tModel.getValueAt(usersTable.getSelectedRow(), 5).toString();
+        String tRole = tModel.getValueAt(usersTable.getSelectedRow(), 6).toString();
         
         fnameField.setText(tFname);
         lnameField.setText(tLname);
@@ -241,64 +217,84 @@ public class users extends javax.swing.JPanel {
         phnumField.setText(tPhnum);
         emailField.setText(tEmail);
         roleField.setSelectedItem(tRole);
-        
+
 //        "ID","First Name","Last Name","Username","Phone No","Email","Role"
     }//GEN-LAST:event_usersTableMouseClicked
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
         // TODO add your handling code here:
+
         DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
-        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(),0));
-        String nameValue = fnameField.getText();
-        String lnameValue = lnameField.getText();
-        String unameValue = unameField.getText();
-        String phnumValue = phnumField.getText();
-        String emailValue = emailField.getText();
-        String roleValue = String.valueOf(roleField.getSelectedItem());
         
-        User user = new User(nameValue,lnameValue,unameValue,phnumValue,emailValue,roleValue);
-        user.setUser_id(idValue);
-        
-        try {
-            UserDao.editUser(user);
-        } catch (SQLException ex) {
-            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+        int selectedRow = usersTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Select a row", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (fnameField.getText().equals("")
+                    || lnameField.getText().equals("") 
+                    || unameField.getText().equals("")
+                    || phnumField.getText().equals("")
+                    || emailField.getText().equals("")
+                    || roleField.getSelectedItem().equals("<select one>")) {
+            JOptionPane.showMessageDialog(null, "Insufficient credentials", "Error", JOptionPane.INFORMATION_MESSAGE);
+                
+            }else{
+            int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(), 0));
+            String nameValue = fnameField.getText();
+            String lnameValue = lnameField.getText();
+            String unameValue = unameField.getText();
+            String phnumValue = phnumField.getText();
+            String emailValue = emailField.getText();
+            String roleValue = String.valueOf(roleField.getSelectedItem());
+            
+            User user = new User(nameValue, lnameValue, unameValue, phnumValue, emailValue, roleValue);
+            user.setUser_id(idValue);
+            
+            try {
+                UserDao.editUser(user);
+            } catch (SQLException ex) {
+                Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                usersTable.setModel(new DefaultTableModel(UserTable.getUsers(), new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                usersTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
+                
+                fnameField.setText("");
+                lnameField.setText("");
+                unameField.setText("");
+                phnumField.setText("");
+                emailField.setText("");
+                roleField.setSelectedItem("<select one>");
+            }  
+            }
         }
-        
-        try{
-        usersTable.setModel(new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
-        }catch(SQLException e){
-        e.printStackTrace();
-        usersTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
-        
-        fnameField.setText("");
-        lnameField.setText("");
-        unameField.setText("");
-        phnumField.setText("");
-        emailField.setText("");
-        roleField.setSelectedItem("<select one>");
-        
-}
-        
     }//GEN-LAST:event_updateButtonMouseClicked
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tModel = (DefaultTableModel) usersTable.getModel();
-        int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(),0));
-        
-         try {
-            UserDao.deleteUser(idValue);
-        } catch (SQLException ex) {
-            Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+        int selectedRow = usersTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Select a row", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int idValue = Integer.parseInt((String) tModel.getValueAt(usersTable.getSelectedRow(), 0));
+            
+            try {
+                UserDao.deleteUser(idValue);
+            } catch (SQLException ex) {
+                Logger.getLogger(users.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try {
+                usersTable.setModel(new DefaultTableModel(UserTable.getUsers(), new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                usersTable.setModel(new DefaultTableModel(new Object[][]{}, new String[]{"ID", "First Name", "Last Name", "Username", "Phone No", "Email", "Role"}));
+            }
         }
-        
-        try{
-        usersTable.setModel(new DefaultTableModel(UserTable.getUsers(),new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
-        }catch(SQLException e){
-        e.printStackTrace();
-        usersTable.setModel(new DefaultTableModel(new Object[][]{},new String[] {"ID","First Name","Last Name","Username","Phone No","Email","Role"}));
-}
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -308,6 +304,7 @@ public class users extends javax.swing.JPanel {
     private void deselectButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deselectButtonMouseClicked
         // TODO add your handling code here:
         usersTable.clearSelection();
+        usersTable.clearSelection();
         fnameField.setText("");
         lnameField.setText("");
         unameField.setText("");
@@ -315,10 +312,6 @@ public class users extends javax.swing.JPanel {
         emailField.setText("");
         roleField.setSelectedItem("<select one>");
     }//GEN-LAST:event_deselectButtonMouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
@@ -334,7 +327,6 @@ public class users extends javax.swing.JPanel {
     private javax.swing.JToggleButton deselectButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JTextField fnameField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

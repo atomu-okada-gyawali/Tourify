@@ -21,24 +21,9 @@ import tourify.database.DB;
  */
 public class BookingDao {
 
-    public static void main(String[] args) throws SQLException {
-        Date currentDate = new Date();
-        Booking booking1 = new Booking(currentDate,
-                "Yes",
-                1,
-                "Queen Size Bed",
-                1,
-                4,
-                "Unpaid",
-                "Flight");
-        Traveller traveller1 = new Traveller("Unchi",
-                "unchi@gmail.com",
-                "9822334455",
-                3);
-        addBooking(booking1, traveller1, 2);
-    }
 
-    public static void addBooking(Booking booking, Traveller traveller, int booker_id) throws SQLException {
+
+    public static void addBooking(Booking booking, Traveller traveller) throws SQLException {
         /*takes booking object, traveller object, booker_id */
 
         try (Connection conn = DB.connect()) {
@@ -54,10 +39,9 @@ public class BookingDao {
                     + "tour_package_id,"
                     + "traveller_id,"
                     + "booking_status,"
-                    + "booking_booker,"
                     + "booking_guide,"
                     + " booking_transportation)"
-                    + " values(?,?,?,?,?,?,?,?,?,?)";
+                    + " values(?,?,?,?,?,?,?,?,?)";
 
             PreparedStatement insertTravellerStmt = conn.prepareStatement(insertTravellerQ);
             PreparedStatement insertBookingStmt = conn.prepareStatement(insertBookingQ);
@@ -85,9 +69,8 @@ public class BookingDao {
             insertBookingStmt.setInt(5, booking.getTour_package_id());
             insertBookingStmt.setInt(6, FKTraveller);
             insertBookingStmt.setString(7, booking.getBooking_status());
-            insertBookingStmt.setInt(8, booker_id);
-            insertBookingStmt.setInt(9, booking.getBooking_agent_id());
-            insertBookingStmt.setString(10, booking.getBooking_transportation());
+            insertBookingStmt.setInt(8, booking.getBooking_agent_id());
+            insertBookingStmt.setString(9, booking.getBooking_transportation());
 
             insertBookingStmt.executeUpdate();
             insertTravellerStmt.close();

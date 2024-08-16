@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package tourify.View;
+import java.util.logging.*;
 
 /**
  *
@@ -30,11 +31,17 @@ public class MainApp extends javax.swing.JFrame {
         bookingsButton = new javax.swing.JButton();
         tpButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         tabPanel = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1440, 1024));
 
+        navigationBar.setBackground(new java.awt.Color(0, 153, 102));
+
+        bookingsButton.setBackground(new java.awt.Color(0, 153, 102));
+        bookingsButton.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
+        bookingsButton.setForeground(new java.awt.Color(255, 255, 255));
         bookingsButton.setText("Bookings");
         bookingsButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -42,6 +49,9 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
+        tpButton.setBackground(new java.awt.Color(0, 153, 102));
+        tpButton.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
+        tpButton.setForeground(new java.awt.Color(255, 255, 255));
         tpButton.setText("Tour Packages");
         tpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -49,6 +59,9 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(0, 153, 102));
+        jButton1.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Users");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -56,27 +69,42 @@ public class MainApp extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(0, 153, 102));
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Tourify");
+
         javax.swing.GroupLayout navigationBarLayout = new javax.swing.GroupLayout(navigationBar);
         navigationBar.setLayout(navigationBarLayout);
         navigationBarLayout.setHorizontalGroup(
             navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navigationBarLayout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addGroup(navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bookingsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGroup(navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(navigationBarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bookingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(navigationBarLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(jLabel1)))
+                .addContainerGap())
         );
+
+        navigationBarLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bookingsButton, jButton1, tpButton});
+
         navigationBarLayout.setVerticalGroup(
             navigationBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navigationBarLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
-                .addComponent(bookingsButton)
-                .addGap(45, 45, 45)
-                .addComponent(tpButton)
-                .addGap(34, 34, 34)
-                .addComponent(jButton1)
+                .addGap(53, 53, 53)
+                .addComponent(jLabel1)
+                .addGap(175, 175, 175)
+                .addComponent(bookingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -142,22 +170,25 @@ public class MainApp extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            System.out.println(ex);
+//            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
         }
+//            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
+//            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
+//            MainApp.util.logging.Logger.getLogger(MainApp.class.getName()).log(MainApp.util.logging.Level.SEVERE, null, ex);
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
-        MainApp.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainApp().setVisible(true);
             }
@@ -167,6 +198,7 @@ public class MainApp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookingsButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel navigationBar;
     private javax.swing.JTabbedPane tabPanel;
     private javax.swing.JButton tpButton;
